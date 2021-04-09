@@ -31,7 +31,7 @@ namespace ConsoleApp10
             }
             else
             {
-                Console.WriteLine("Anda Keluar Dari Program. TerimaKasih");
+                Console.WriteLine("Anda Keluar dari Program. TerimaKasih");
             }
 
             while (lanjutPesan != 0)
@@ -78,7 +78,7 @@ namespace ConsoleApp10
                             menuTerpilih = MenuData.menuData[kodeMenu];
                             adaError = false;
                         }
-                        catch(Exception e)
+                        catch(Exception)
                         {
                             adaError = true;
                             Console.WriteLine("Input yang anda masukkan salah!");

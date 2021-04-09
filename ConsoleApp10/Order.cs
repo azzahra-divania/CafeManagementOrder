@@ -34,7 +34,7 @@ namespace ConsoleApp10
         }
         public   void cetak()
         {
-            Console.WriteLine("Customer Name :...... ..{0}", customerName);
+            Console.WriteLine("Customer Name :........{0}", customerName);
             foreach (OrderItem orderitem in orderItems)
             {
                 
