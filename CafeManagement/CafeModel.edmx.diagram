@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5ef1b7ba21cb4773859d13944ca205a3" Name="Diagram1">
+        <EntityTypeShape EntityType="cafeModel.Order" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="cafeModel.OrderXTransaksi" Width="1.5" PointX="5.25" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="cafeModel.Pelanggan" Width="1.5" PointX="0.75" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="cafeModel.Size" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="cafeModel.Topping" Width="1.5" PointX="0.75" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="cafeModel.Transaksi" Width="1.5" PointX="3" PointY="12.5" IsExpanded="true" />
+        <AssociationConnector Association="cafeModel.FK__Orders__size__2E1BDC42" ManuallyRouted="false" />
+        <AssociationConnector Association="cafeModel.FK__Orders__topping___2F10007B" ManuallyRouted="false" />
+        <AssociationConnector Association="cafeModel.FK__OrderXTra__order__300424B4" ManuallyRouted="false" />
+        <AssociationConnector Association="cafeModel.FK__OrderXTransaksi__30F848ED" ManuallyRouted="false" />
+        <AssociationConnector Association="cafeModel.FK__Transaksi__id_pe__398D8EEE" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="cafeModel.Menu" Width="1.5" PointX="5.375" PointY="6" />
+        <AssociationConnector Association="cafeModel.FK__Orders__menu_id__2D27B8091" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

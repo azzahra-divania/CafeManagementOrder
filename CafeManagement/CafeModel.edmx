@@ -1,0 +1,542 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="cafeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Menu">
+          <Key>
+            <PropertyRef Name="menu_id" />
+          </Key>
+          <Property Name="menu_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nama_menu" Type="char" MaxLength="50" Nullable="false" />
+          <Property Name="deskripsi" Type="char" MaxLength="300" />
+          <Property Name="harga" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="gambar_menu" Type="varchar(max)" />
+          <Property Name="ismakanan" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderMinuman">
+          <Key>
+            <PropertyRef Name="minuman_id" />
+          </Key>
+          <Property Name="minuman_id" Type="int" Nullable="false" />
+          <Property Name="size" Type="char" MaxLength="5" Nullable="false" />
+          <Property Name="topping_id" Type="int" Nullable="false" />
+          <Property Name="isBawaTumblr" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="order_id" />
+          </Key>
+          <Property Name="order_id" Type="int" Nullable="false" />
+          <Property Name="menu_id" Type="int" Nullable="false" />
+          <Property Name="quantity" Type="int" Nullable="false" />
+          <Property Name="harga_total_per_item" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderXTransaksi">
+          <Key>
+            <PropertyRef Name="nomor_transaksi" />
+            <PropertyRef Name="tanggal_transaksi" />
+            <PropertyRef Name="order_id" />
+          </Key>
+          <Property Name="nomor_transaksi" Type="int" Nullable="false" />
+          <Property Name="tanggal_transaksi" Type="date" Nullable="false" />
+          <Property Name="order_id" Type="int" Nullable="false" />
+          <Property Name="harga_item_qty" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pelanggan">
+          <Key>
+            <PropertyRef Name="id_pelanggan" />
+          </Key>
+          <Property Name="id_pelanggan" Type="int" Nullable="false" />
+          <Property Name="nama_pelanggan" Type="char" MaxLength="50" Nullable="false" />
+          <Property Name="point" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Size">
+          <Key>
+            <PropertyRef Name="size" />
+          </Key>
+          <Property Name="size" Type="char" MaxLength="5" Nullable="false" />
+          <Property Name="harga" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="volume" Type="int" />
+        </EntityType>
+        <EntityType Name="Topping">
+          <Key>
+            <PropertyRef Name="topping_id" />
+          </Key>
+          <Property Name="topping_id" Type="int" Nullable="false" />
+          <Property Name="nama_topping" Type="char" MaxLength="50" Nullable="false" />
+          <Property Name="deskripsi" Type="char" MaxLength="300" />
+          <Property Name="harga" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Transaksi">
+          <Key>
+            <PropertyRef Name="nomor_transaksi" />
+            <PropertyRef Name="tanggal_transaksi" />
+          </Key>
+          <Property Name="nomor_transaksi" Type="int" Nullable="false" />
+          <Property Name="tanggal_transaksi" Type="date" Nullable="false" />
+          <Property Name="id_pelanggan" Type="int" Nullable="false" />
+          <Property Name="total_harga" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="total_pajak" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="total_bayar" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="penambahan_point" Type="int" />
+        </EntityType>
+        <Association Name="FK__OrderMinu__minum__14270015">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="OrderMinuman" Type="Self.OrderMinuman" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="order_id" />
+            </Principal>
+            <Dependent Role="OrderMinuman">
+              <PropertyRef Name="minuman_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderMinu__toppi__03F0984C">
+          <End Role="Topping" Type="Self.Topping" Multiplicity="1" />
+          <End Role="OrderMinuman" Type="Self.OrderMinuman" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Topping">
+              <PropertyRef Name="topping_id" />
+            </Principal>
+            <Dependent Role="OrderMinuman">
+              <PropertyRef Name="topping_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderMinum__size__02FC7413">
+          <End Role="Size" Type="Self.Size" Multiplicity="1" />
+          <End Role="OrderMinuman" Type="Self.OrderMinuman" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Size">
+              <PropertyRef Name="size" />
+            </Principal>
+            <Dependent Role="OrderMinuman">
+              <PropertyRef Name="size" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__menu_id__73BA3083">
+          <End Role="Menu" Type="Self.Menu" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menu">
+              <PropertyRef Name="menu_id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="menu_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderXTra__order__300424B4">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="OrderXTransaksi" Type="Self.OrderXTransaksi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="order_id" />
+            </Principal>
+            <Dependent Role="OrderXTransaksi">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderXTransaksi__30F848ED">
+          <End Role="Transaksi" Type="Self.Transaksi" Multiplicity="1" />
+          <End Role="OrderXTransaksi" Type="Self.OrderXTransaksi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transaksi">
+              <PropertyRef Name="nomor_transaksi" />
+              <PropertyRef Name="tanggal_transaksi" />
+            </Principal>
+            <Dependent Role="OrderXTransaksi">
+              <PropertyRef Name="nomor_transaksi" />
+              <PropertyRef Name="tanggal_transaksi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Transaksi__id_pe__398D8EEE">
+          <End Role="Pelanggan" Type="Self.Pelanggan" Multiplicity="1" />
+          <End Role="Transaksi" Type="Self.Transaksi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pelanggan">
+              <PropertyRef Name="id_pelanggan" />
+            </Principal>
+            <Dependent Role="Transaksi">
+              <PropertyRef Name="id_pelanggan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="cafeModelStoreContainer">
+          <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderMinuman" EntityType="Self.OrderMinuman" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderXTransaksi" EntityType="Self.OrderXTransaksi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pelanggan" EntityType="Self.Pelanggan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Size" EntityType="Self.Size" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Topping" EntityType="Self.Topping" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Transaksi" EntityType="Self.Transaksi" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__OrderMinu__minum__14270015" Association="Self.FK__OrderMinu__minum__14270015">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrderMinuman" EntitySet="OrderMinuman" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderMinu__toppi__03F0984C" Association="Self.FK__OrderMinu__toppi__03F0984C">
+            <End Role="Topping" EntitySet="Topping" />
+            <End Role="OrderMinuman" EntitySet="OrderMinuman" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderMinum__size__02FC7413" Association="Self.FK__OrderMinum__size__02FC7413">
+            <End Role="Size" EntitySet="Size" />
+            <End Role="OrderMinuman" EntitySet="OrderMinuman" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__menu_id__73BA3083" Association="Self.FK__Orders__menu_id__73BA3083">
+            <End Role="Menu" EntitySet="Menu" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderXTra__order__300424B4" Association="Self.FK__OrderXTra__order__300424B4">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrderXTransaksi" EntitySet="OrderXTransaksi" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderXTransaksi__30F848ED" Association="Self.FK__OrderXTransaksi__30F848ED">
+            <End Role="Transaksi" EntitySet="Transaksi" />
+            <End Role="OrderXTransaksi" EntitySet="OrderXTransaksi" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Transaksi__id_pe__398D8EEE" Association="Self.FK__Transaksi__id_pe__398D8EEE">
+            <End Role="Pelanggan" EntitySet="Pelanggan" />
+            <End Role="Transaksi" EntitySet="Transaksi" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="cafeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="order_id" />
+          </Key>
+          <Property Name="order_id" Type="Int32" Nullable="false" />
+          <Property Name="menu_id" Type="Int32" Nullable="false" />
+          <Property Name="quantity" Type="Int32" Nullable="false" />
+          <Property Name="harga_total_per_item" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <NavigationProperty Name="OrderXTransaksis" Relationship="Self.FK__OrderXTra__order__300424B4" FromRole="Orders" ToRole="OrderXTransaksi" />
+          <NavigationProperty Name="Menu" Relationship="cafeModel.FK__Orders__menu_id__2D27B8091" FromRole="Order" ToRole="Menu" />
+          <NavigationProperty Name="OrderMinuman" Relationship="cafeModel.FK__OrderMinu__minum__14270015" FromRole="Order" ToRole="OrderMinuman" />
+        </EntityType>
+        <EntityType Name="OrderXTransaksi">
+          <Key>
+            <PropertyRef Name="nomor_transaksi" />
+            <PropertyRef Name="tanggal_transaksi" />
+            <PropertyRef Name="order_id" />
+          </Key>
+          <Property Name="nomor_transaksi" Type="Int32" Nullable="false" />
+          <Property Name="tanggal_transaksi" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="order_id" Type="Int32" Nullable="false" />
+          <Property Name="harga_item_qty" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <NavigationProperty Name="Order" Relationship="Self.FK__OrderXTra__order__300424B4" FromRole="OrderXTransaksi" ToRole="Orders" />
+          <NavigationProperty Name="Transaksi" Relationship="Self.FK__OrderXTransaksi__30F848ED" FromRole="OrderXTransaksi" ToRole="Transaksi" />
+        </EntityType>
+        <EntityType Name="Pelanggan">
+          <Key>
+            <PropertyRef Name="id_pelanggan" />
+          </Key>
+          <Property Name="id_pelanggan" Type="Int32" Nullable="false" />
+          <Property Name="nama_pelanggan" Type="String" MaxLength="50" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="point" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Transaksis" Relationship="Self.FK__Transaksi__id_pe__398D8EEE" FromRole="Pelanggan" ToRole="Transaksi" />
+        </EntityType>
+        <EntityType Name="Size">
+          <Key>
+            <PropertyRef Name="size1" />
+          </Key>
+          <Property Name="size1" Type="String" MaxLength="5" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="harga" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="volume" Type="Int32" />
+          <NavigationProperty Name="OrderMinumen" Relationship="cafeModel.FK__OrderMinum__size__02FC7413" FromRole="Size" ToRole="OrderMinuman" />
+        </EntityType>
+        <EntityType Name="Topping">
+          <Key>
+            <PropertyRef Name="topping_id" />
+          </Key>
+          <Property Name="topping_id" Type="Int32" Nullable="false" />
+          <Property Name="nama_topping" Type="String" MaxLength="50" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="deskripsi" Type="String" MaxLength="300" FixedLength="true" Unicode="false" />
+          <Property Name="harga" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <NavigationProperty Name="OrderMinumen" Relationship="cafeModel.FK__OrderMinu__toppi__03F0984C" FromRole="Topping" ToRole="OrderMinuman" />
+        </EntityType>
+        <EntityType Name="Transaksi">
+          <Key>
+            <PropertyRef Name="nomor_transaksi" />
+            <PropertyRef Name="tanggal_transaksi" />
+          </Key>
+          <Property Name="nomor_transaksi" Type="Int32" Nullable="false" />
+          <Property Name="tanggal_transaksi" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="id_pelanggan" Type="Int32" Nullable="false" />
+          <Property Name="total_harga" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="total_pajak" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="total_bayar" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="penambahan_point" Type="Int32" />
+          <NavigationProperty Name="OrderXTransaksis" Relationship="Self.FK__OrderXTransaksi__30F848ED" FromRole="Transaksi" ToRole="OrderXTransaksi" />
+          <NavigationProperty Name="Pelanggan" Relationship="Self.FK__Transaksi__id_pe__398D8EEE" FromRole="Transaksi" ToRole="Pelanggan" />
+        </EntityType>
+        <Association Name="FK__OrderXTra__order__300424B4">
+          <End Role="Orders" Type="Self.Order" Multiplicity="1" />
+          <End Role="OrderXTransaksi" Type="Self.OrderXTransaksi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="order_id" />
+            </Principal>
+            <Dependent Role="OrderXTransaksi">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderXTransaksi__30F848ED">
+          <End Role="Transaksi" Type="Self.Transaksi" Multiplicity="1" />
+          <End Role="OrderXTransaksi" Type="Self.OrderXTransaksi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transaksi">
+              <PropertyRef Name="nomor_transaksi" />
+              <PropertyRef Name="tanggal_transaksi" />
+            </Principal>
+            <Dependent Role="OrderXTransaksi">
+              <PropertyRef Name="nomor_transaksi" />
+              <PropertyRef Name="tanggal_transaksi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Transaksi__id_pe__398D8EEE">
+          <End Role="Pelanggan" Type="Self.Pelanggan" Multiplicity="1" />
+          <End Role="Transaksi" Type="Self.Transaksi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pelanggan">
+              <PropertyRef Name="id_pelanggan" />
+            </Principal>
+            <Dependent Role="Transaksi">
+              <PropertyRef Name="id_pelanggan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="cafeEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Orders" EntityType="Self.Order" />
+          <EntitySet Name="OrderXTransaksis" EntityType="Self.OrderXTransaksi" />
+          <EntitySet Name="Pelanggans" EntityType="Self.Pelanggan" />
+          <EntitySet Name="Sizes" EntityType="Self.Size" />
+          <EntitySet Name="Toppings" EntityType="Self.Topping" />
+          <EntitySet Name="Transaksis" EntityType="Self.Transaksi" />
+          <AssociationSet Name="FK__OrderXTra__order__300424B4" Association="Self.FK__OrderXTra__order__300424B4">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrderXTransaksi" EntitySet="OrderXTransaksis" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderXTransaksi__30F848ED" Association="Self.FK__OrderXTransaksi__30F848ED">
+            <End Role="Transaksi" EntitySet="Transaksis" />
+            <End Role="OrderXTransaksi" EntitySet="OrderXTransaksis" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Transaksi__id_pe__398D8EEE" Association="Self.FK__Transaksi__id_pe__398D8EEE">
+            <End Role="Pelanggan" EntitySet="Pelanggans" />
+            <End Role="Transaksi" EntitySet="Transaksis" />
+          </AssociationSet>
+          <EntitySet Name="Menus" EntityType="cafeModel.Menu" />
+          <AssociationSet Name="FK__Orders__menu_id__2D27B8091" Association="cafeModel.FK__Orders__menu_id__2D27B8091">
+            <End Role="Menu" EntitySet="Menus" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <EntitySet Name="OrderMinumen" EntityType="cafeModel.OrderMinuman" />
+          <AssociationSet Name="FK__OrderMinu__toppi__03F0984C" Association="cafeModel.FK__OrderMinu__toppi__03F0984C">
+            <End Role="Topping" EntitySet="Toppings" />
+            <End Role="OrderMinuman" EntitySet="OrderMinumen" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderMinum__size__02FC7413" Association="cafeModel.FK__OrderMinum__size__02FC7413">
+            <End Role="Size" EntitySet="Sizes" />
+            <End Role="OrderMinuman" EntitySet="OrderMinumen" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderMinu__minum__14270015" Association="cafeModel.FK__OrderMinu__minum__14270015">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="OrderMinuman" EntitySet="OrderMinumen" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Menu">
+          <Key>
+            <PropertyRef Name="menu_id" />
+          </Key>
+          <Property Name="menu_id" Type="Int32" Nullable="false" />
+          <Property Name="nama_menu" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="false" />
+          <Property Name="deskripsi" Type="String" MaxLength="300" FixedLength="true" Unicode="false" />
+          <Property Name="harga" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <NavigationProperty Name="Orders" Relationship="cafeModel.FK__Orders__menu_id__2D27B8091" FromRole="Menu" ToRole="Order" />
+          <Property Name="ismakanan" Type="Boolean" Nullable="false" />
+          <Property Name="gambar_menu" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK__Orders__menu_id__2D27B8091">
+          <End Type="cafeModel.Menu" Role="Menu" Multiplicity="1" />
+          <End Type="cafeModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menu">
+              <PropertyRef Name="menu_id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="menu_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="OrderMinuman">
+          <Key>
+            <PropertyRef Name="minuman_id" />
+          </Key>
+          <Property Name="minuman_id" Type="Int32" Nullable="false" />
+          <Property Name="size" Type="String" Nullable="false" MaxLength="5" FixedLength="true" Unicode="false" />
+          <Property Name="topping_id" Type="Int32" Nullable="false" />
+          <Property Name="isBawaTumblr" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Topping" Relationship="cafeModel.FK__OrderMinu__toppi__03F0984C" FromRole="OrderMinuman" ToRole="Topping" />
+          <NavigationProperty Name="Size1" Relationship="cafeModel.FK__OrderMinum__size__02FC7413" FromRole="OrderMinuman" ToRole="Size" />
+          <NavigationProperty Name="Order" Relationship="cafeModel.FK__OrderMinu__minum__14270015" FromRole="OrderMinuman" ToRole="Order" />
+        </EntityType>
+        <Association Name="FK__OrderMinu__toppi__03F0984C">
+          <End Type="cafeModel.Topping" Role="Topping" Multiplicity="1" />
+          <End Type="cafeModel.OrderMinuman" Role="OrderMinuman" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Topping">
+              <PropertyRef Name="topping_id" />
+            </Principal>
+            <Dependent Role="OrderMinuman">
+              <PropertyRef Name="topping_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderMinum__size__02FC7413">
+          <End Type="cafeModel.Size" Role="Size" Multiplicity="1" />
+          <End Type="cafeModel.OrderMinuman" Role="OrderMinuman" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Size">
+              <PropertyRef Name="size1" />
+            </Principal>
+            <Dependent Role="OrderMinuman">
+              <PropertyRef Name="size" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderMinu__minum__14270015">
+          <End Type="cafeModel.Order" Role="Order" Multiplicity="1" />
+          <End Type="cafeModel.OrderMinuman" Role="OrderMinuman" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="order_id" />
+            </Principal>
+            <Dependent Role="OrderMinuman">
+              <PropertyRef Name="minuman_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="cafeModelStoreContainer" CdmEntityContainer="cafeEntities">
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="cafeModel.Order">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+                <ScalarProperty Name="menu_id" ColumnName="menu_id" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="harga_total_per_item" ColumnName="harga_total_per_item" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderXTransaksis">
+            <EntityTypeMapping TypeName="cafeModel.OrderXTransaksi">
+              <MappingFragment StoreEntitySet="OrderXTransaksi">
+                <ScalarProperty Name="nomor_transaksi" ColumnName="nomor_transaksi" />
+                <ScalarProperty Name="tanggal_transaksi" ColumnName="tanggal_transaksi" />
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+                <ScalarProperty Name="harga_item_qty" ColumnName="harga_item_qty" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pelanggans">
+            <EntityTypeMapping TypeName="cafeModel.Pelanggan">
+              <MappingFragment StoreEntitySet="Pelanggan">
+                <ScalarProperty Name="id_pelanggan" ColumnName="id_pelanggan" />
+                <ScalarProperty Name="nama_pelanggan" ColumnName="nama_pelanggan" />
+                <ScalarProperty Name="point" ColumnName="point" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sizes">
+            <EntityTypeMapping TypeName="cafeModel.Size">
+              <MappingFragment StoreEntitySet="Size">
+                <ScalarProperty Name="size1" ColumnName="size" />
+                <ScalarProperty Name="harga" ColumnName="harga" />
+                <ScalarProperty Name="volume" ColumnName="volume" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Toppings">
+            <EntityTypeMapping TypeName="cafeModel.Topping">
+              <MappingFragment StoreEntitySet="Topping">
+                <ScalarProperty Name="topping_id" ColumnName="topping_id" />
+                <ScalarProperty Name="nama_topping" ColumnName="nama_topping" />
+                <ScalarProperty Name="deskripsi" ColumnName="deskripsi" />
+                <ScalarProperty Name="harga" ColumnName="harga" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transaksis">
+            <EntityTypeMapping TypeName="cafeModel.Transaksi">
+              <MappingFragment StoreEntitySet="Transaksi">
+                <ScalarProperty Name="nomor_transaksi" ColumnName="nomor_transaksi" />
+                <ScalarProperty Name="tanggal_transaksi" ColumnName="tanggal_transaksi" />
+                <ScalarProperty Name="id_pelanggan" ColumnName="id_pelanggan" />
+                <ScalarProperty Name="total_harga" ColumnName="total_harga" />
+                <ScalarProperty Name="total_pajak" ColumnName="total_pajak" />
+                <ScalarProperty Name="total_bayar" ColumnName="total_bayar" />
+                <ScalarProperty Name="penambahan_point" ColumnName="penambahan_point" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Menus">
+            <EntityTypeMapping TypeName="cafeModel.Menu">
+              <MappingFragment StoreEntitySet="Menu">
+                <ScalarProperty Name="gambar_menu" ColumnName="gambar_menu" />
+                <ScalarProperty Name="ismakanan" ColumnName="ismakanan" />
+                <ScalarProperty Name="harga" ColumnName="harga" />
+                <ScalarProperty Name="deskripsi" ColumnName="deskripsi" />
+                <ScalarProperty Name="nama_menu" ColumnName="nama_menu" />
+                <ScalarProperty Name="menu_id" ColumnName="menu_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderMinumen">
+            <EntityTypeMapping TypeName="cafeModel.OrderMinuman">
+              <MappingFragment StoreEntitySet="OrderMinuman">
+                <ScalarProperty Name="isBawaTumblr" ColumnName="isBawaTumblr" />
+                <ScalarProperty Name="topping_id" ColumnName="topping_id" />
+                <ScalarProperty Name="size" ColumnName="size" />
+                <ScalarProperty Name="minuman_id" ColumnName="minuman_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

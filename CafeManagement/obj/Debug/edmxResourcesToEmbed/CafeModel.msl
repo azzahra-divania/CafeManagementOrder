@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="cafeModelStoreContainer" CdmEntityContainer="cafeEntities">
+    <EntitySetMapping Name="Orders">
+      <EntityTypeMapping TypeName="cafeModel.Order">
+        <MappingFragment StoreEntitySet="Orders">
+          <ScalarProperty Name="order_id" ColumnName="order_id" />
+          <ScalarProperty Name="menu_id" ColumnName="menu_id" />
+          <ScalarProperty Name="quantity" ColumnName="quantity" />
+          <ScalarProperty Name="harga_total_per_item" ColumnName="harga_total_per_item" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderXTransaksis">
+      <EntityTypeMapping TypeName="cafeModel.OrderXTransaksi">
+        <MappingFragment StoreEntitySet="OrderXTransaksi">
+          <ScalarProperty Name="nomor_transaksi" ColumnName="nomor_transaksi" />
+          <ScalarProperty Name="tanggal_transaksi" ColumnName="tanggal_transaksi" />
+          <ScalarProperty Name="order_id" ColumnName="order_id" />
+          <ScalarProperty Name="harga_item_qty" ColumnName="harga_item_qty" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Pelanggans">
+      <EntityTypeMapping TypeName="cafeModel.Pelanggan">
+        <MappingFragment StoreEntitySet="Pelanggan">
+          <ScalarProperty Name="id_pelanggan" ColumnName="id_pelanggan" />
+          <ScalarProperty Name="nama_pelanggan" ColumnName="nama_pelanggan" />
+          <ScalarProperty Name="point" ColumnName="point" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sizes">
+      <EntityTypeMapping TypeName="cafeModel.Size">
+        <MappingFragment StoreEntitySet="Size">
+          <ScalarProperty Name="size1" ColumnName="size" />
+          <ScalarProperty Name="harga" ColumnName="harga" />
+          <ScalarProperty Name="volume" ColumnName="volume" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Toppings">
+      <EntityTypeMapping TypeName="cafeModel.Topping">
+        <MappingFragment StoreEntitySet="Topping">
+          <ScalarProperty Name="topping_id" ColumnName="topping_id" />
+          <ScalarProperty Name="nama_topping" ColumnName="nama_topping" />
+          <ScalarProperty Name="deskripsi" ColumnName="deskripsi" />
+          <ScalarProperty Name="harga" ColumnName="harga" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Transaksis">
+      <EntityTypeMapping TypeName="cafeModel.Transaksi">
+        <MappingFragment StoreEntitySet="Transaksi">
+          <ScalarProperty Name="nomor_transaksi" ColumnName="nomor_transaksi" />
+          <ScalarProperty Name="tanggal_transaksi" ColumnName="tanggal_transaksi" />
+          <ScalarProperty Name="id_pelanggan" ColumnName="id_pelanggan" />
+          <ScalarProperty Name="total_harga" ColumnName="total_harga" />
+          <ScalarProperty Name="total_pajak" ColumnName="total_pajak" />
+          <ScalarProperty Name="total_bayar" ColumnName="total_bayar" />
+          <ScalarProperty Name="penambahan_point" ColumnName="penambahan_point" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Menus">
+      <EntityTypeMapping TypeName="cafeModel.Menu">
+        <MappingFragment StoreEntitySet="Menu">
+          <ScalarProperty Name="gambar_menu" ColumnName="gambar_menu" />
+          <ScalarProperty Name="ismakanan" ColumnName="ismakanan" />
+          <ScalarProperty Name="harga" ColumnName="harga" />
+          <ScalarProperty Name="deskripsi" ColumnName="deskripsi" />
+          <ScalarProperty Name="nama_menu" ColumnName="nama_menu" />
+          <ScalarProperty Name="menu_id" ColumnName="menu_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderMinumen">
+      <EntityTypeMapping TypeName="cafeModel.OrderMinuman">
+        <MappingFragment StoreEntitySet="OrderMinuman">
+          <ScalarProperty Name="isBawaTumblr" ColumnName="isBawaTumblr" />
+          <ScalarProperty Name="topping_id" ColumnName="topping_id" />
+          <ScalarProperty Name="size" ColumnName="size" />
+          <ScalarProperty Name="minuman_id" ColumnName="minuman_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
